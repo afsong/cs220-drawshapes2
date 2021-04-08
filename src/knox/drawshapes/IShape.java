@@ -1,7 +1,5 @@
 package knox.drawshapes;
 
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -19,13 +17,14 @@ import java.awt.Point;
  * @author jaimespacco
  *
  */
-public interface IShape extends IMoveableShape
-{
+public interface IShape extends IMoveableShape {
     /**
      * Draw the shape using the given Graphics object
+     * 
      * @param g
      */
     public void draw(Graphics g);
+
     /**
      * Does this shape intersect any part of the other shape?
      * 
@@ -33,6 +32,7 @@ public interface IShape extends IMoveableShape
      * @return
      */
     public boolean intersects(IShape other);
+
     /**
      * Does this shape contain the given point?
      * 
@@ -40,18 +40,21 @@ public interface IShape extends IMoveableShape
      * @return
      */
     public boolean contains(Point point);
+
     /**
      * Return the color of this shape.
      * 
      * @return
      */
     public Color getColor();
+
     /**
      * Set the color of this shape to the given color.
      * 
      * @param color
      */
     public void setColor(Color color);
+
     /**
      * Is this shape selected?
      * 
@@ -60,19 +63,24 @@ public interface IShape extends IMoveableShape
      * @return
      */
     public boolean isSelected();
+
     /**
      * Set the selected status of this shape to the given value.
+     * 
      * @param b
      */
     public void setSelected(boolean b);
-    
+
     /**
      * Return the anchor point of this shape.
+     * 
      * @return
      */
     public Point getAnchorPoint();
+
     /**
      * Set the anchor point of this shape to the given point.
+     * 
      * @param p
      */
     public void setAnchorPoint(Point p);
