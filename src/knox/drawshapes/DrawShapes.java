@@ -143,6 +143,7 @@ public class DrawShapes extends JFrame {
     private void initializeMenu() {
         // menu bar
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setForeground(Color.WHITE);
 
         // file menu
         JMenu fileMenu = new JMenu("File");
@@ -297,7 +298,15 @@ public class DrawShapes extends JFrame {
                 repaint();
             }
         });
-
+        // clear screen
+        addToMenu(operationModeMenu, "Clear Screen", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = e.getActionCommand();
+                System.out.println(text);
+                // scene.scale(0.75);
+                // repaint();
+            }
+        });
         // move option
         addToMenu(operationModeMenu, "Move", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
