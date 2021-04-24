@@ -9,6 +9,9 @@ public abstract class AbstractShape implements IShape {
     protected boolean selected;
     protected BoundingBox boundingBox;
 
+    public AbstractShape() {
+    }
+
     public AbstractShape(Point anchorPoint, Color color) {
         this.anchorPoint = anchorPoint;
         this.color = color;
