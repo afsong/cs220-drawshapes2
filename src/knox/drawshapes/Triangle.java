@@ -8,6 +8,8 @@ public class Triangle extends AbstractShape {
     protected Point center;
     protected int radius;
     protected int halfSideLen;
+    protected int[] pointsX;
+    protected int[] pointsY;
 
     public Triangle(Color color, Point center, int radius) {
         super(center, color);
@@ -17,6 +19,17 @@ public class Triangle extends AbstractShape {
         this.halfSideLen = (int) halfSideLen;
         this.center = center;
         this.radius = radius;
+
+        pointsX = new int[3];
+        pointsY = new int[3];
+
+        pointsX[0] = center.x;
+        pointsX[1] = center.x - (int) halfSideLen;
+        pointsX[2] = center.x + (int) halfSideLen;
+
+        pointsY[0] = center.y - radius;
+        pointsY[1] = center.y + radius / 2;
+        pointsY[2] = center.y + radius / 2;
     }
 
     /*
@@ -31,17 +44,8 @@ public class Triangle extends AbstractShape {
         } else {
             g.setColor(getColor());
         }
-        int[] pointsX = new int[4];
-        int[] pointsY = new int[4];
-        pointsX[0] = center.x;
-        pointsX[1] = center.x - (int) halfSideLen;
-        pointsX[2] = center.x + (int) halfSideLen;
-        pointsX[3] = center.x;
-        pointsY[0] = center.y - radius;
-        pointsY[1] = center.y + radius / 2;
-        pointsY[2] = center.y + radius / 2;
-        pointsY[3] = center.y - radius;
-        g.fillPolygon(pointsX, pointsY, 4);
+
+        g.fillPolygon(pointsX, pointsY, 3);
     }
 
     public String toString() {
@@ -58,6 +62,22 @@ public class Triangle extends AbstractShape {
     public void scale(double factor) {
         this.radius = (int) (this.radius * factor);
         this.halfSideLen = (int) (this.halfSideLen * factor);
+    }
+
+    @Override
+    public void rotate() {
+        double rotateAngle = Math.PI / 4.0;
+
+        for (int i = 0; i < pointsX.length; i++) {
+            double x = pointsX[i];
+            double y = pointsY[i];
+
+            pointsX[i] = (int) (center.getX() + (x - center.getX()) * Math.cos(rotateAngle)
+                    - (y - center.getY()) * Math.sin(rotateAngle));
+
+            pointsY[i] = (int) (center.getY() + (x - center.getX()) * Math.sin(rotateAngle)
+                    + (y - center.getY()) * Math.cos(rotateAngle));
+        }
     }
 
 }

@@ -140,6 +140,14 @@ public class Scene implements Iterable<IShape> {
         shapeList.removeIf(s -> s.isSelected());
     }
 
+    public void rotate() {
+        for (IShape s : shapeList) {
+            if (s.isSelected()) {
+                s.rotate();
+            }
+        }
+    }
+
     public String toString() {
         String shapeText = "";
         for (IShape s : shapeList) {

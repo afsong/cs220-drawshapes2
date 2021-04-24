@@ -35,4 +35,9 @@ public class Circle extends AbstractShape {
         this.diameter = (int) (factor * this.diameter);
     }
 
+    @Override
+    public void rotate() {
+        // nothing to be done because circle cannot be rotated
+    }
+
 }

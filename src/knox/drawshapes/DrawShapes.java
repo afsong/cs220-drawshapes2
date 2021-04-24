@@ -298,21 +298,20 @@ public class DrawShapes extends JFrame {
                 repaint();
             }
         });
-        // clear screen
-        addToMenu(operationModeMenu, "Clear Screen", new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String text = e.getActionCommand();
-                System.out.println(text);
-                // scene.scale(0.75);
-                // repaint();
-            }
-        });
+
         // move option
         addToMenu(operationModeMenu, "Move", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String text = e.getActionCommand();
                 // currently this just prints
                 System.out.println(text);
+            }
+        });
+
+        addToMenu(operationModeMenu, "Rotate", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                scene.rotate();
+                repaint();
             }
         });
 
