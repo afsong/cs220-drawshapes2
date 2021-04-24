@@ -10,6 +10,7 @@ public class Rectangle extends AbstractShape {
 
     public Rectangle(Point center, int width, int height, Color color) {
         super(new Point(center.x, center.y), color);
+       
         boundingBox = new BoundingBox(center.x - width / 2, center.x + width / 2, center.y - height / 2,
                 center.y + height / 2);
         this.width = width;

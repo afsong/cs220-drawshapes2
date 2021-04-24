@@ -25,7 +25,7 @@ import javax.swing.JMenuItem;
 @SuppressWarnings("serial")
 public class DrawShapes extends JFrame {
     private enum ShapeType {
-        SQUARE, CIRCLE, RECTANGLE
+        SQUARE, CIRCLE, RECTANGLE, TRIANGLE
     }
 
     private DrawShapesPanel shapePanel;
@@ -73,6 +73,8 @@ public class DrawShapes extends JFrame {
                         scene.addShape(new Circle(color, e.getPoint(), 100));
                     } else if (shapeType == ShapeType.RECTANGLE) {
                         scene.addShape(new Rectangle(e.getPoint(), 100, 200, color));
+                    } else if (shapeType == ShapeType.TRIANGLE) {
+                        scene.addShape(new Triangle(color, e.getPoint(), 50));
                     }
 
                 } else if (e.getButton() == MouseEvent.BUTTON2) {
@@ -264,7 +266,14 @@ public class DrawShapes extends JFrame {
                 shapeType = ShapeType.CIRCLE;
             }
         });
-
+        // triangle
+        addToMenu(shapeMenu, "Triangle", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Triangle");
+                shapeType = ShapeType.TRIANGLE;
+            }
+        });
         // operation mode menu
         JMenu operationModeMenu = new JMenu("Operation");
         menuBar.add(operationModeMenu);
