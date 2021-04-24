@@ -25,7 +25,7 @@ import javax.swing.JMenuItem;
 @SuppressWarnings("serial")
 public class DrawShapes extends JFrame {
     private enum ShapeType {
-        SQUARE, CIRCLE, RECTANGLE
+        SQUARE, CIRCLE, RECTANGLE, TRIANGLE, LINE
     }
 
     private DrawShapesPanel shapePanel;
@@ -63,18 +63,28 @@ public class DrawShapes extends JFrame {
     private void initializeMouseListener() {
         MouseAdapter a = new MouseAdapter() {
 
+            private int lastX;
+            private int lastY;
+
+            @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.printf("Mouse clicked at (%d, %d)\n", e.getX(), e.getY());
 
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (shapeType == ShapeType.SQUARE) {
+                    switch (shapeType) {
+                    case SQUARE:
                         scene.addShape(new Square(color, e.getX(), e.getY(), 100));
-                    } else if (shapeType == ShapeType.CIRCLE) {
+                        break;
+                    case CIRCLE:
                         scene.addShape(new Circle(color, e.getPoint(), 100));
-                    } else if (shapeType == ShapeType.RECTANGLE) {
+                        break;
+                    case RECTANGLE:
                         scene.addShape(new Rectangle(e.getPoint(), 100, 200, color));
+                        break;
+                    case TRIANGLE:
+                        scene.addShape(new Triangle(color, e.getPoint(), 50));
+                        break;
                     }
-
                 } else if (e.getButton() == MouseEvent.BUTTON2) {
                     // apparently this is middle click
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
@@ -103,7 +113,13 @@ public class DrawShapes extends JFrame {
              */
             public void mousePressed(MouseEvent e) {
                 System.out.printf("mouse pressed at (%d, %d)\n", e.getX(), e.getY());
-                scene.startDrag(e.getPoint());
+
+                if (shapeType != ShapeType.LINE) {
+                    scene.startDrag(e.getPoint());
+                } else {
+                    lastX = e.getX();
+                    lastY = e.getY();
+                }
 
             }
 
@@ -121,7 +137,13 @@ public class DrawShapes extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 System.out.printf("mouse drag! (%d, %d)\n", e.getX(), e.getY());
-                scene.updateSelectRect(e.getPoint());
+                if (shapeType != ShapeType.LINE) {
+                    scene.updateSelectRect(e.getPoint());
+                } else {
+                    scene.addShape(new Line(lastX, lastY, e.getX(), e.getY()));
+                    lastX = e.getX();
+                    lastY = e.getY();
+                }
                 repaint();
             }
 
@@ -141,6 +163,7 @@ public class DrawShapes extends JFrame {
     private void initializeMenu() {
         // menu bar
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setForeground(Color.WHITE);
 
         // file menu
         JMenu fileMenu = new JMenu("File");
@@ -264,6 +287,22 @@ public class DrawShapes extends JFrame {
                 shapeType = ShapeType.CIRCLE;
             }
         });
+        // triangle
+        addToMenu(shapeMenu, "Triangle", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Triangle");
+                shapeType = ShapeType.TRIANGLE;
+            }
+        });
+
+        // line
+        addToMenu(shapeMenu, "Line", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                shapeType = ShapeType.LINE;
+            }
+        });
 
         // operation mode menu
         JMenu operationModeMenu = new JMenu("Operation");
@@ -295,6 +334,13 @@ public class DrawShapes extends JFrame {
                 String text = e.getActionCommand();
                 // currently this just prints
                 System.out.println(text);
+            }
+        });
+
+        addToMenu(operationModeMenu, "Rotate", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                scene.rotate();
+                repaint();
             }
         });
 

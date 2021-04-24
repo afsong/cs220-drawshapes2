@@ -15,4 +15,9 @@ public interface IMoveableShape {
      * @param d
      */
     public void scale(double d);
+
+    /**
+     * Rotate the shape
+     */
+    public void rotate();
 }
